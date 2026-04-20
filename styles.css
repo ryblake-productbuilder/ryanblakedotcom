@@ -1,16 +1,20 @@
 :root {
-  --bg: #f3efe7;
-  --bg-strong: #e6dece;
-  --surface: rgba(255, 250, 242, 0.72);
-  --surface-strong: #fffaf2;
-  --text: #1f1a17;
-  --muted: #685f58;
-  --line: rgba(31, 26, 23, 0.1);
-  --accent: #a24d2f;
-  --accent-deep: #743017;
-  --shadow: 0 18px 60px rgba(66, 39, 20, 0.12);
-  --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif;
-  --sans: "Avenir Next", "Segoe UI", sans-serif;
+  --bg: #eef5fc;
+  --bg-strong: #dbeaf8;
+  --surface: rgba(255, 255, 255, 0.84);
+  --surface-strong: #ffffff;
+  --text: #1a1a1a;
+  --muted: #5e6b78;
+  --line: rgba(12, 68, 124, 0.12);
+  --accent: #185fa5;
+  --accent-deep: #0c447c;
+  --accent-light: #378add;
+  --accent-soft: rgba(133, 183, 235, 0.6);
+  --brand-builder: #1a1a1a;
+  --brand-agency: #666666;
+  --brand-tagline: #999999;
+  --shadow: 0 18px 60px rgba(24, 95, 165, 0.12);
+  --sans: Arial, Helvetica, sans-serif;
   --radius-lg: 28px;
   --radius-md: 20px;
   --max-width: 1180px;
@@ -30,9 +34,9 @@ body {
   color: var(--text);
   font-family: var(--sans);
   background:
-    radial-gradient(circle at top left, rgba(162, 77, 47, 0.16), transparent 28%),
-    radial-gradient(circle at 80% 20%, rgba(117, 129, 95, 0.14), transparent 24%),
-    linear-gradient(180deg, #f7f2e9 0%, var(--bg) 44%, #efe7da 100%);
+    radial-gradient(circle at top left, rgba(24, 95, 165, 0.14), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(55, 138, 221, 0.12), transparent 24%),
+    linear-gradient(180deg, #f7fbff 0%, var(--bg) 44%, #e8f1fa 100%);
 }
 
 body::before {
@@ -41,8 +45,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(31, 26, 23, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 26, 23, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(24, 95, 165, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 95, 165, 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent 85%);
 }
@@ -66,7 +70,7 @@ body::before {
   border: 1px solid var(--line);
   border-radius: 999px;
   backdrop-filter: blur(18px);
-  background: rgba(255, 248, 239, 0.76);
+  background: rgba(255, 255, 255, 0.74);
   box-shadow: var(--shadow);
 }
 
@@ -79,9 +83,80 @@ body::before {
 }
 
 .wordmark {
-  font-family: var(--display);
-  font-size: 1.25rem;
-  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-owner {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.brand-cube {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  transform: rotate(45deg);
+}
+
+.cube-face,
+.cube-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+}
+
+.cube-top {
+  background: var(--accent);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.cube-left {
+  background: var(--accent-deep);
+  clip-path: polygon(0% 50%, 50% 0%, 50% 100%);
+}
+
+.cube-right {
+  background: var(--accent-light);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%);
+}
+
+.cube-core {
+  inset: 7px;
+  background: var(--accent-soft);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.brand-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.brand-product {
+  color: var(--accent);
+}
+
+.brand-builder {
+  color: var(--brand-builder);
+}
+
+.brand-agency {
+  color: var(--brand-agency);
+  font-weight: 600;
 }
 
 .nav {
@@ -97,6 +172,12 @@ body::before {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 0.76rem;
+}
+
+.eyebrow,
+.card-label,
+.project-index {
+  color: var(--brand-tagline);
 }
 
 .hero,
@@ -116,17 +197,19 @@ body::before {
 .section-heading h2,
 .contact-card h2 {
   margin: 0;
-  font-family: var(--display);
-  font-weight: 500;
-  line-height: 0.95;
+  font-family: var(--sans);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 .hero-copy h1 {
   max-width: 12ch;
-  font-size: clamp(3.5rem, 9vw, 7.3rem);
+  font-size: clamp(3.2rem, 8vw, 6.3rem);
 }
 
 .lede,
+.hero-support,
 .project-card p,
 .about-panel p,
 .hero-metric p,
@@ -139,6 +222,11 @@ body::before {
   max-width: 36rem;
   margin: 22px 0 0;
   font-size: 1.1rem;
+}
+
+.hero-support {
+  max-width: 35rem;
+  margin: 14px 0 0;
 }
 
 .hero-actions {
@@ -166,13 +254,13 @@ body::before {
 }
 
 .button-primary {
-  color: #fff8f1;
+  color: #ffffff;
   background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   border-color: transparent;
 }
 
 .button-secondary {
-  background: rgba(255, 250, 242, 0.58);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .hero-card,
@@ -205,8 +293,9 @@ body::before {
 .hero-metric span {
   display: inline-block;
   margin-bottom: 8px;
-  font-family: var(--display);
+  color: var(--accent-deep);
   font-size: 2.2rem;
+  font-weight: 700;
 }
 
 .marquee {
@@ -240,7 +329,7 @@ body::before {
 
 .section-heading h2,
 .contact-card h2 {
-  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
   max-width: 12ch;
 }
 
@@ -267,15 +356,15 @@ body::before {
 
 .project-card h3 {
   margin: 12px 0 10px;
-  font-family: var(--display);
-  font-size: 1.9rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .featured {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent),
-    linear-gradient(135deg, rgba(162, 77, 47, 0.18), rgba(255, 250, 242, 0.4));
+    linear-gradient(135deg, rgba(24, 95, 165, 0.16), rgba(255, 255, 255, 0.48));
 }
 
 .about-layout {
@@ -287,15 +376,16 @@ body::before {
   align-items: end;
   min-height: 320px;
   background:
-    radial-gradient(circle at top, rgba(162, 77, 47, 0.12), transparent 36%),
+    radial-gradient(circle at top, rgba(55, 138, 221, 0.16), transparent 36%),
     var(--surface);
 }
 
 .quote {
   margin: 0;
-  font-family: var(--display);
   font-size: clamp(2rem, 4vw, 3.2rem);
   line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 700;
 }
 
 .contact-card {
@@ -303,7 +393,7 @@ body::before {
   align-items: center;
   padding: 30px;
   background:
-    linear-gradient(120deg, rgba(255, 248, 239, 0.94), rgba(230, 222, 206, 0.95)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.98), rgba(219, 234, 248, 0.94)),
     var(--surface-strong);
 }
 
@@ -314,6 +404,17 @@ body::before {
 
 .contact-links a {
   font-size: 1.05rem;
+}
+
+.nav a,
+.contact-links a {
+  color: var(--text);
+}
+
+.nav a:hover,
+.contact-links a:hover,
+.button-secondary:hover {
+  color: var(--accent-deep);
 }
 
 .reveal {
@@ -357,6 +458,12 @@ body::before {
     flex-direction: column;
     align-items: flex-start;
     padding: 18px;
+  }
+
+  .wordmark {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .hero {
