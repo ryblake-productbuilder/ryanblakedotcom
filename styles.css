@@ -83,12 +83,13 @@ body::before {
 }
 
 .wordmark {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 14px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   letter-spacing: 0.02em;
   font-weight: 700;
+  color: var(--text);
 }
 
 .brand-lockup {
@@ -205,7 +206,7 @@ body::before {
 
 .hero-copy h1 {
   max-width: 12ch;
-  font-size: clamp(3.2rem, 8vw, 6.3rem);
+  font-size: clamp(1.7rem, 4.2vw, 3.2rem);
 }
 
 .lede,
@@ -299,15 +300,15 @@ body::before {
 }
 
 .marquee {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
-  gap: 20px;
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 20px;
   margin: 18px 0 72px;
   padding: 14px 0;
   border-block: 1px solid var(--line);
   color: var(--muted);
+  text-align: center;
 }
 
 .marquee p {
@@ -315,12 +316,17 @@ body::before {
   margin: 0;
   padding-right: 20px;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .marquee p::after {
   content: "•";
   position: absolute;
   right: 0;
+}
+
+.marquee-last::after {
+  content: "";
 }
 
 .section-heading {
