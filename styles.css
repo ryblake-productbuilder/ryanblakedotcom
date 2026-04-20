@@ -194,7 +194,7 @@ body::before {
   padding: 32px 0 20px;
 }
 
-.hero-copy h1,
+.hero-intro h1,
 .section-heading h2,
 .contact-card h2 {
   margin: 0;
@@ -204,7 +204,11 @@ body::before {
   letter-spacing: -0.04em;
 }
 
-.hero-copy h1 {
+.hero-intro {
+  grid-column: 1 / -1;
+}
+
+.hero-intro h1 {
   max-width: none;
   font-size: clamp(1.35rem, 3.1vw, 2.4rem);
 }
@@ -279,14 +283,10 @@ body::before {
   padding: 28px;
 }
 
-.hero-copy {
-  grid-column: 1 / -1;
-}
-
 .hero-card {
   grid-column: 2;
   max-width: 420px;
-  justify-self: end;
+  justify-self: start;
   align-self: start;
   margin-top: 0;
 }
@@ -433,6 +433,7 @@ body::before {
     grid-template-columns: 1fr;
   }
 
+  .hero-intro,
   .hero-copy,
   .hero-card {
     grid-column: auto;
