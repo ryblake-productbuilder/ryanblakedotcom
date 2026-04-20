@@ -288,7 +288,7 @@ body::before {
   max-width: 420px;
   justify-self: end;
   align-self: start;
-  margin-top: clamp(78px, 9vw, 112px);
+  margin-top: 0;
 }
 
 .signal-list {
@@ -438,7 +438,6 @@ body::before {
     grid-column: auto;
     max-width: none;
     justify-self: stretch;
-    margin-top: 0;
   }
 
   .hero-copy h1,
