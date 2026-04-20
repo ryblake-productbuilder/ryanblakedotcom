@@ -191,7 +191,7 @@ body::before {
 .hero {
   grid-template-columns: 1.6fr 0.9fr;
   align-items: end;
-  padding: 56px 0 28px;
+  padding: 32px 0 20px;
 }
 
 .hero-copy h1,
@@ -205,7 +205,7 @@ body::before {
 }
 
 .hero-copy h1 {
-  max-width: 12ch;
+  max-width: none;
   font-size: clamp(1.7rem, 4.2vw, 3.2rem);
 }
 
@@ -221,13 +221,13 @@ body::before {
 
 .lede {
   max-width: 36rem;
-  margin: 22px 0 0;
+  margin: 14px 0 0;
   font-size: 1.1rem;
 }
 
 .hero-support {
   max-width: 35rem;
-  margin: 14px 0 0;
+  margin: 10px 0 0;
 }
 
 .hero-actions {
@@ -279,6 +279,16 @@ body::before {
   padding: 28px;
 }
 
+.hero-copy {
+  grid-column: 1 / -1;
+}
+
+.hero-card {
+  grid-column: 2;
+  max-width: 420px;
+  justify-self: end;
+}
+
 .signal-list {
   margin: 18px 0 24px;
   padding-left: 20px;
@@ -304,7 +314,7 @@ body::before {
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px 20px;
-  margin: 18px 0 72px;
+  margin: 8px 0 48px;
   padding: 14px 0;
   border-block: 1px solid var(--line);
   color: var(--muted);
@@ -325,7 +335,7 @@ body::before {
   right: 0;
 }
 
-.marquee-last::after {
+.marquee p.marquee-last::after {
   content: "";
 }
 
@@ -336,17 +346,13 @@ body::before {
 .section-heading h2,
 .contact-card h2 {
   font-size: clamp(2.2rem, 5vw, 4.2rem);
-  max-width: 12ch;
-}
-
-.section-heading.narrow h2 {
-  max-width: 13ch;
+  max-width: none;
 }
 
 .work-section,
 .about-section,
 .contact-section {
-  padding: 28px 0 40px;
+  padding: 20px 0 28px;
 }
 
 .project-grid {
@@ -440,6 +446,13 @@ body::before {
   .about-layout,
   .contact-card {
     grid-template-columns: 1fr;
+  }
+
+  .hero-copy,
+  .hero-card {
+    grid-column: auto;
+    max-width: none;
+    justify-self: stretch;
   }
 
   .hero-copy h1,
