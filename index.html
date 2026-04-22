@@ -62,10 +62,6 @@
               <li>AI-enabled product strategy and execution</li>
               <li>Cross-functional leadership for software delivery</li>
             </ul>
-            <div class="hero-metric">
-              <span>15+</span>
-              <p>Years across product management, product ownership, consulting, and delivery leadership.</p>
-            </div>
           </aside>
         </section>
 
@@ -172,6 +168,60 @@
                 concentration in Management Information Systems from California
                 Polytechnic State University, San Luis Obispo.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="chat-section" id="chat">
+          <div class="section-heading">
+            <p class="eyebrow">AI Chat</p>
+            <h2>Ask an AI assistant about Ryan’s background, experience, and focus.</h2>
+          </div>
+
+          <div class="chat-shell">
+            <div class="chat-intro">
+              <p>
+                This assistant uses retrieval over Ryan’s site content and profile details,
+                then answers with grounded context instead of a generic chatbot response.
+              </p>
+              <div class="chat-suggestions" aria-label="Suggested questions">
+                <button class="suggestion-chip" type="button" data-prompt="What kinds of product work has Ryan led?">
+                  What kinds of product work has Ryan led?
+                </button>
+                <button class="suggestion-chip" type="button" data-prompt="What is Ryan's experience with healthcare integrations?">
+                  What is Ryan's experience with healthcare integrations?
+                </button>
+                <button class="suggestion-chip" type="button" data-prompt="What makes Ryan a strong product partner?">
+                  What makes Ryan a strong product partner?
+                </button>
+              </div>
+            </div>
+
+            <div class="chat-panel">
+              <div class="chat-log" id="chat-log" aria-live="polite">
+                <article class="chat-message chat-message-assistant">
+                  <p>
+                    Ask me about Ryan’s product leadership, experience, education, awards,
+                    technical background, or current focus.
+                  </p>
+                </article>
+              </div>
+
+              <form class="chat-form" id="chat-form">
+                <label class="sr-only" for="chat-input">Ask a question</label>
+                <textarea
+                  id="chat-input"
+                  name="message"
+                  rows="3"
+                  maxlength="600"
+                  placeholder="Ask about Ryan’s experience, industries, technical work, or leadership style..."
+                  required
+                ></textarea>
+                <div class="chat-form-row">
+                  <p class="chat-note">Powered by retrieval plus AI responses.</p>
+                  <button class="button button-primary" type="submit" id="chat-submit">Ask</button>
+                </div>
+              </form>
             </div>
           </div>
         </section>
