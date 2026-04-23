@@ -31,6 +31,9 @@ const chatInput = document.querySelector("#chat-input");
 const chatLog = document.querySelector("#chat-log");
 const chatSubmit = document.querySelector("#chat-submit");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
+const portfolioTrack = document.querySelector("#portfolio-track");
+const carouselControls = document.querySelectorAll("[data-carousel-action]");
+let carouselTimer;
 
 function appendMessage(role, text, sources = []) {
   if (!chatLog) {
@@ -124,3 +127,70 @@ suggestionButtons.forEach((button) => {
     await submitChat(prompt);
   });
 });
+
+function getCarouselStep() {
+  if (!portfolioTrack) {
+    return 0;
+  }
+
+  const firstCard = portfolioTrack.querySelector(".portfolio-card");
+  const trackStyles = window.getComputedStyle(portfolioTrack);
+  const gap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+
+  return firstCard ? firstCard.getBoundingClientRect().width + gap : 0;
+}
+
+function moveCarousel(direction) {
+  if (!portfolioTrack) {
+    return;
+  }
+
+  const step = getCarouselStep();
+  const maxScroll = portfolioTrack.scrollWidth - portfolioTrack.clientWidth;
+  const nextPosition = portfolioTrack.scrollLeft + step * direction;
+
+  if (nextPosition > maxScroll - 2) {
+    portfolioTrack.scrollTo({ left: 0, behavior: "auto" });
+    window.requestAnimationFrame(() => {
+      portfolioTrack.scrollBy({ left: step, behavior: "smooth" });
+    });
+    return;
+  }
+
+  if (nextPosition < 0) {
+    portfolioTrack.scrollTo({ left: maxScroll, behavior: "auto" });
+    window.requestAnimationFrame(() => {
+      portfolioTrack.scrollBy({ left: -step, behavior: "smooth" });
+    });
+    return;
+  }
+
+  portfolioTrack.scrollBy({ left: step * direction, behavior: "smooth" });
+}
+
+carouselControls.forEach((button) => {
+  button.addEventListener("click", () => {
+    const action = button.getAttribute("data-carousel-action");
+
+    if (action === "prev") {
+      moveCarousel(-1);
+    }
+
+    if (action === "next") {
+      moveCarousel(1);
+    }
+  });
+});
+
+function startCarousel() {
+  if (!portfolioTrack || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  window.clearInterval(carouselTimer);
+  carouselTimer = window.setInterval(() => {
+    moveCarousel(1);
+  }, 5000);
+}
+
+startCarousel();

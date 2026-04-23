@@ -501,6 +501,129 @@ body::before {
   letter-spacing: -0.03em;
 }
 
+.portfolio-carousel {
+  overflow: hidden;
+}
+
+.portfolio-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding: 4px 4px 16px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.portfolio-track::-webkit-scrollbar {
+  display: none;
+}
+
+.portfolio-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 min(360px, 82vw);
+  min-height: 330px;
+  scroll-snap-align: start;
+}
+
+.project-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: auto;
+  align-self: center;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.project-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(24, 95, 165, 0.3);
+}
+
+.project-card p a {
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-decoration-color: rgba(24, 95, 165, 0.32);
+  text-underline-offset: 3px;
+}
+
+.patent-list {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.patent-list a {
+  display: inline-block;
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-decoration-color: rgba(24, 95, 165, 0.32);
+  text-underline-offset: 3px;
+}
+
+
+.banana-card {
+  flex-basis: min(720px, 92vw);
+  overflow: hidden;
+}
+
+.app-thumbnail-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.app-thumbnail-row img {
+  width: 100%;
+  max-width: 150px;
+  aspect-ratio: 1242 / 2688;
+  justify-self: center;
+  object-fit: contain;
+  border: 1px solid rgba(12, 68, 124, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 12px 34px rgba(24, 95, 165, 0.12);
+}
+
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.carousel-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.carousel-control:hover {
+  transform: translateY(-1px);
+  border-color: rgba(24, 95, 165, 0.3);
+  color: var(--accent-deep);
+}
+
 .featured {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent),
@@ -558,6 +681,19 @@ body::before {
   .chat-shell,
   .contact-card {
     grid-template-columns: 1fr;
+  }
+
+  .portfolio-track {
+    gap: 14px;
+  }
+
+  .portfolio-card,
+  .banana-card {
+    flex-basis: 84vw;
+  }
+
+  .app-thumbnail-row {
+    gap: 8px;
   }
 
   .hero-intro,
