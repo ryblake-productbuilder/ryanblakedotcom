@@ -27,7 +27,31 @@ export const KNOWLEDGE_BASE = [
     id: "healthcare",
     title: "Healthcare integrations",
     content:
-      "Ryan served as Product Owner for EMR integration work and defined HL7 and FHIR specifications from complex interface requirements.",
+      "Ryan served as Product Owner for EMR integration work and defined HL7 and FHIR specifications from complex interface requirements. In partnership with Cognizant, Exact Sciences, and Epic, Ryan documented and wrote requirements for standard communication protocols and industry best practices for an Epic EHR order and results integration.",
+  },
+  {
+    id: "portfolio-oracle-guided-learning-permalink",
+    title: "Portfolio: Oracle Guided Learning Permalink",
+    content:
+      "For Oracle, Ryan worked on Oracle Guided Learning Permalink. The work enhanced the ability to obtain a unique URL that points directly to a guide. Guided Learning creates the permalink so it can be shared or embedded with others as needed. A related Oracle blog post is available at https://blogs.oracle.com/oracleuniversity/protect-and-share-your-guides-with-others.",
+  },
+  {
+    id: "portfolio-cognizant-exact-sciences-epic",
+    title: "Portfolio: Order and Results Integration for Exact Sciences and Epic",
+    content:
+      "For Cognizant, in partnership with Exact Sciences and Epic, Ryan worked on Order and Results Integration for Exact Sciences and Epic. Ryan documented and wrote requirements for standard communication protocols and industry best practices; developed the user story map, requirements, and integration plans; conducted demos; and assisted in responding to RFPs for external hospital networks and healthcare providers. The work lowered distractions by keeping healthcare workers focused in their main EHR rather than switching between external systems, supported timely patient results, and helped ensure correct clinical data was recorded for use in the patient's treatment plan.",
+  },
+  {
+    id: "portfolio-charles-schwab-lapse-job",
+    title: "Portfolio: Charles Schwab Lapse Job",
+    content:
+      "For Charles Schwab, Ryan worked on the Lapse Job, improving the removal of restriction on stock award job performance metrics. For one client, approximately 40,000 more records were awarded and processed, a 36% increase from the prior award cycle. Total time went from 230 minutes down to 37, an 84% reduction. Records processed per minute went from 454 to 3,895, a 757% increase.",
+  },
+  {
+    id: "portfolio-placeholders",
+    title: "Portfolio placeholders",
+    content:
+      "The portfolio currently includes placeholder entries for Oracle and Panasonic that are intended to be filled in with specific project details later.",
   },
   {
     id: "commercial-impact",
@@ -72,4 +96,3 @@ export const KNOWLEDGE_BASE = [
       "Ryan is a US patent holder and AI enthusiast.",
   },
 ];
-

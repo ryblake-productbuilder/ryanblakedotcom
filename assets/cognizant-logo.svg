@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="cognizant-logo-title">
+  <title id="cognizant-logo-title">Cognizant logo</title>
+  <defs>
+    <linearGradient id="cognizant-a" x1="20" x2="70" y1="22" y2="78" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1b2a96" />
+      <stop offset="0.48" stop-color="#00a7c8" />
+      <stop offset="1" stop-color="#78d1df" />
+    </linearGradient>
+    <linearGradient id="cognizant-b" x1="40" x2="84" y1="20" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6cc7de" />
+      <stop offset="1" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="#ffffff" />
+  <path fill="url(#cognizant-a)" d="M31 18h38l20 34-20 34H31L11 52z" />
+  <path fill="#17258f" d="M31 18 11 52h38l20-34z" opacity="0.95" />
+  <path fill="#00a9ca" d="M11 52 31 86h38L49 52z" opacity="0.95" />
+  <path fill="url(#cognizant-b)" d="M69 18 49 52h40z" />
+  <path fill="#66c9dc" d="M49 52 69 86l20-34z" opacity="0.9" />
+</svg>

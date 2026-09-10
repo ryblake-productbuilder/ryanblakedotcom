@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="charles-schwab-logo-title">
+  <title id="charles-schwab-logo-title">Charles Schwab logo</title>
+  <rect width="100" height="100" fill="#00a8df" />
+  <text
+    x="50"
+    y="45"
+    fill="#ffffff"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="31"
+    font-weight="700"
+    text-anchor="middle"
+  >SCH</text>
+  <text
+    x="50"
+    y="73"
+    fill="#ffffff"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="31"
+    font-weight="700"
+    text-anchor="middle"
+  >WAB</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="oracle-logo-title">
+  <title id="oracle-logo-title">Oracle logo</title>
+  <rect width="100" height="100" fill="#c74634" />
+  <path
+    fill="#ffffff"
+    d="M33 32h34c10.49 0 19 8.51 19 19s-8.51 19-19 19H33c-10.49 0-19-8.51-19-19s8.51-19 19-19Zm.4 10C28.14 42 24 45.95 24 51s4.14 9 9.4 9h33.2c5.26 0 9.4-3.95 9.4-9s-4.14-9-9.4-9H33.4Z"
+  />
+</svg>

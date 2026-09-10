@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="panasonic-logo-title">
+  <title id="panasonic-logo-title">Panasonic logo</title>
+  <rect width="100" height="100" fill="#1f5cb8" />
+  <text
+    x="50"
+    y="55"
+    fill="#ffffff"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="13"
+    font-weight="700"
+    text-anchor="middle"
+  >Panasonic</text>
+</svg>
