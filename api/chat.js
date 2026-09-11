@@ -181,9 +181,6 @@ export default {
       );
     }
 
-    return Response.json({
-      answer,
-      sources: suppliedContextChunks.map((chunk) => chunk.title),
-    });
+    return Response.json({ answer });
   },
 };

@@ -41,6 +41,41 @@ const chatPanel = document.querySelector("#chat-panel");
 const chatClose = document.querySelector("#chat-close");
 const chatOpenLinks = document.querySelectorAll("[data-chat-open]");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
+const portfolioTrack = document.querySelector("#portfolio-track");
+const snapshotControls = document.querySelectorAll("[data-snapshot-action]");
+
+function getSnapshotScrollDistance() {
+  if (!portfolioTrack) {
+    return 0;
+  }
+
+  const firstCard = portfolioTrack.querySelector(".portfolio-card");
+  const trackStyles = window.getComputedStyle(portfolioTrack);
+  const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+
+  return firstCard ? firstCard.offsetWidth + gap : portfolioTrack.clientWidth;
+}
+
+Array.prototype.forEach.call(snapshotControls, (button) => {
+  button.addEventListener("click", () => {
+    if (!portfolioTrack) {
+      return;
+    }
+
+    const direction = button.getAttribute("data-snapshot-action") === "prev" ? -1 : 1;
+    const distance = getSnapshotScrollDistance() * direction;
+
+    if (typeof portfolioTrack.scrollBy === "function") {
+      portfolioTrack.scrollBy({
+        left: distance,
+        behavior: "smooth",
+      });
+      return;
+    }
+
+    portfolioTrack.scrollLeft += distance;
+  });
+});
 
 function setChatOpen(isOpen) {
   if (!chatPanel || !chatToggle) {
@@ -91,12 +126,10 @@ if (window.location.hash === "#chat-widget") {
   setChatOpen(true);
 }
 
-function appendMessage(role, text, sources) {
+function appendMessage(role, text) {
   if (!chatLog) {
     return;
   }
-
-  const messageSources = sources || [];
 
   const message = document.createElement("article");
   message.className = `chat-message chat-message-${role}`;
@@ -104,13 +137,6 @@ function appendMessage(role, text, sources) {
   const paragraph = document.createElement("p");
   paragraph.textContent = text;
   message.appendChild(paragraph);
-
-  if (role === "assistant" && messageSources.length > 0) {
-    const sourceList = document.createElement("p");
-    sourceList.className = "chat-source-list";
-    sourceList.textContent = `Grounded in: ${messageSources.join(", ")}`;
-    message.appendChild(sourceList);
-  }
 
   chatLog.appendChild(message);
   chatLog.scrollTop = chatLog.scrollHeight;
@@ -150,7 +176,7 @@ async function submitChat(message) {
       throw new Error(payload.error || "Something went wrong.");
     }
 
-    appendMessage("assistant", payload.answer, payload.sources || []);
+    appendMessage("assistant", payload.answer);
   } catch (error) {
     appendMessage(
       "assistant",
