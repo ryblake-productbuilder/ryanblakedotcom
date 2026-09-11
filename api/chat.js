@@ -41,6 +41,24 @@ function retrieveContext(question) {
     .filter((chunk) => chunk.score > 0);
 }
 
+function extractResponseText(result) {
+  if (typeof result.output_text === "string" && result.output_text.trim()) {
+    return result.output_text.trim();
+  }
+
+  const textParts = [];
+
+  for (const outputItem of result.output || []) {
+    for (const contentItem of outputItem.content || []) {
+      if (typeof contentItem.text === "string") {
+        textParts.push(contentItem.text);
+      }
+    }
+  }
+
+  return textParts.join("\n").trim();
+}
+
 export default {
   async fetch(request) {
     if (request.method !== "POST") {
@@ -120,11 +138,18 @@ export default {
     }
 
     const result = await upstream.json();
-    const answer = result.output_text?.trim();
+    const answer = extractResponseText(result);
 
     if (!answer) {
       return Response.json(
-        { error: "The AI response came back empty." },
+        {
+          error: "The AI response came back empty.",
+          details: {
+            id: result.id,
+            status: result.status,
+            outputTypes: (result.output || []).map((item) => item.type),
+          },
+        },
         { status: 500 }
       );
     }
