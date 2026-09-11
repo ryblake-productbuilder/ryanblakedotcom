@@ -2,14 +2,14 @@ const revealTargets = document.querySelectorAll(
   ".hero-intro, .hero-copy, .hero-card, .portfolio-summary, .portfolio-year, .portfolio-entry, .portfolio-disclaimer, .legal-card, .marquee, .section-heading, .project-card, .about-panel, .chat-shell, .contact-card"
 );
 
-revealTargets.forEach((element) => {
+Array.prototype.forEach.call(revealTargets, (element) => {
   element.classList.add("reveal");
 });
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
+      Array.prototype.forEach.call(entries, (entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
@@ -22,12 +22,12 @@ if ("IntersectionObserver" in window) {
     }
   );
 
-  revealTargets.forEach((element, index) => {
+  Array.prototype.forEach.call(revealTargets, (element, index) => {
     element.style.transitionDelay = `${index * 60}ms`;
     observer.observe(element);
   });
 } else {
-  revealTargets.forEach((element) => {
+  Array.prototype.forEach.call(revealTargets, (element) => {
     element.classList.add("is-visible");
   });
 }
@@ -41,9 +41,7 @@ const chatPanel = document.querySelector("#chat-panel");
 const chatClose = document.querySelector("#chat-close");
 const chatOpenLinks = document.querySelectorAll("[data-chat-open]");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
-const snapshotCards = document.querySelectorAll(".portfolio-card");
-const snapshotControls = document.querySelectorAll("[data-snapshot-action]");
-let selectedSnapshotIndex = 0;
+
 function setChatOpen(isOpen) {
   if (!chatPanel || !chatToggle) {
     return;
@@ -73,7 +71,7 @@ if (chatClose) {
   });
 }
 
-chatOpenLinks.forEach((link) => {
+Array.prototype.forEach.call(chatOpenLinks, (link) => {
   link.addEventListener("click", () => {
     setChatOpen(true);
   });
@@ -93,10 +91,12 @@ if (window.location.hash === "#chat-widget") {
   setChatOpen(true);
 }
 
-function appendMessage(role, text, sources = []) {
+function appendMessage(role, text, sources) {
   if (!chatLog) {
     return;
   }
+
+  const messageSources = sources || [];
 
   const message = document.createElement("article");
   message.className = `chat-message chat-message-${role}`;
@@ -105,10 +105,10 @@ function appendMessage(role, text, sources = []) {
   paragraph.textContent = text;
   message.appendChild(paragraph);
 
-  if (role === "assistant" && sources.length > 0) {
+  if (role === "assistant" && messageSources.length > 0) {
     const sourceList = document.createElement("p");
     sourceList.className = "chat-source-list";
-    sourceList.textContent = `Grounded in: ${sources.join(", ")}`;
+    sourceList.textContent = `Grounded in: ${messageSources.join(", ")}`;
     message.appendChild(sourceList);
   }
 
@@ -138,7 +138,7 @@ async function submitChat(message) {
 
     try {
       payload = responseText ? JSON.parse(responseText) : {};
-    } catch {
+    } catch (parseError) {
       payload = {
         error: response.ok
           ? "The chat response could not be read."
@@ -181,7 +181,7 @@ if (chatForm && chatInput) {
   });
 }
 
-suggestionButtons.forEach((button) => {
+Array.prototype.forEach.call(suggestionButtons, (button) => {
   button.addEventListener("click", async () => {
     const prompt = button.getAttribute("data-prompt");
 
@@ -190,47 +190,9 @@ suggestionButtons.forEach((button) => {
     }
 
     if (chatInput) {
-      chatInput.value = prompt;
+      chatInput.value = "";
     }
 
     await submitChat(prompt);
-  });
-});
-
-function selectSnapshotCard(index) {
-  if (snapshotCards.length === 0) {
-    return;
-  }
-
-  selectedSnapshotIndex =
-    (index + snapshotCards.length) % snapshotCards.length;
-
-  snapshotCards.forEach((card, cardIndex) => {
-    card.classList.toggle("is-selected", cardIndex === selectedSnapshotIndex);
-  });
-
-  try {
-    snapshotCards[selectedSnapshotIndex].focus({ preventScroll: true });
-  } catch {
-    snapshotCards[selectedSnapshotIndex].focus();
-  }
-
-  try {
-    snapshotCards[selectedSnapshotIndex].scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
-  } catch {
-    snapshotCards[selectedSnapshotIndex].scrollIntoView(false);
-  }
-}
-
-snapshotControls.forEach((button) => {
-  button.addEventListener("click", () => {
-    const direction =
-      button.getAttribute("data-snapshot-action") === "prev" ? -1 : 1;
-
-    selectSnapshotCard(selectedSnapshotIndex + direction);
   });
 });

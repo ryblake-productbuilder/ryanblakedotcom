@@ -531,6 +531,23 @@ body::before {
   line-height: 1.75;
 }
 
+.legal-card h2 {
+  margin: 32px 0 12px;
+  font-size: 1.18rem;
+  color: var(--ink);
+}
+
+.legal-card ul {
+  margin: 0 0 20px 20px;
+  padding: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.legal-card li + li {
+  margin-top: 6px;
+}
+
 .legal-card p:last-child {
   margin-bottom: 0;
 }
@@ -721,6 +738,18 @@ body::before {
   letter-spacing: -0.03em;
 }
 
+.chat-disclaimer {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.chat-disclaimer a {
+  color: var(--accent-deep);
+  text-underline-offset: 3px;
+}
+
 .chat-close {
   display: inline-flex;
   align-items: center;
@@ -792,11 +821,6 @@ body::before {
   display: flex;
   flex-direction: column;
   min-height: 330px;
-}
-
-.portfolio-card.is-selected {
-  outline: 2px solid rgba(24, 95, 165, 0.32);
-  outline-offset: 3px;
 }
 
 .project-link {
@@ -894,6 +918,17 @@ body::before {
   transform: translateY(-1px);
   border-color: rgba(24, 95, 165, 0.3);
   color: var(--accent-deep);
+}
+
+.snapshot-control:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.snapshot-control:disabled:hover {
+  transform: none;
+  border-color: var(--line);
+  color: var(--text);
 }
 
 .featured {
