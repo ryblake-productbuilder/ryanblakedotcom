@@ -30,10 +30,53 @@ const chatForm = document.querySelector("#chat-form");
 const chatInput = document.querySelector("#chat-input");
 const chatLog = document.querySelector("#chat-log");
 const chatSubmit = document.querySelector("#chat-submit");
+const chatToggle = document.querySelector("#chat-toggle");
+const chatPanel = document.querySelector("#chat-panel");
+const chatClose = document.querySelector("#chat-close");
+const chatOpenLinks = document.querySelectorAll("[data-chat-open]");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
 const portfolioTrack = document.querySelector("#portfolio-track");
 const carouselControls = document.querySelectorAll("[data-carousel-action]");
 let carouselTimer;
+
+function setChatOpen(isOpen) {
+  if (!chatPanel || !chatToggle) {
+    return;
+  }
+
+  chatPanel.hidden = !isOpen;
+  chatToggle.setAttribute("aria-expanded", String(isOpen));
+
+  if (isOpen && chatInput) {
+    window.setTimeout(() => chatInput.focus(), 80);
+  }
+}
+
+chatToggle?.addEventListener("click", () => {
+  setChatOpen(chatPanel?.hidden);
+});
+
+chatClose?.addEventListener("click", () => {
+  setChatOpen(false);
+  chatToggle?.focus();
+});
+
+chatOpenLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    setChatOpen(true);
+  });
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && chatPanel && !chatPanel.hidden) {
+    setChatOpen(false);
+    chatToggle?.focus();
+  }
+});
+
+if (window.location.hash === "#chat-widget") {
+  setChatOpen(true);
+}
 
 function appendMessage(role, text, sources = []) {
   if (!chatLog) {

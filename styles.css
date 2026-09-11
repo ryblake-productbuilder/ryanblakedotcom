@@ -281,7 +281,6 @@ body::before {
 .chat-intro,
 .portfolio-entry,
 .portfolio-disclaimer,
-.portfolio-chat-cta,
 .legal-card {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -355,7 +354,6 @@ body::before {
 
 .work-section,
 .about-section,
-.chat-section,
 .contact-section,
 .portfolio-timeline {
   padding: 20px 0 28px;
@@ -371,7 +369,6 @@ body::before {
 .about-panel,
 .portfolio-entry,
 .portfolio-disclaimer,
-.portfolio-chat-cta,
 .legal-card {
   padding: 26px;
 }
@@ -485,21 +482,6 @@ body::before {
   color: var(--muted);
   font-size: 0.92rem;
   line-height: 1.6;
-}
-
-.portfolio-chat-cta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-  margin-top: 18px;
-}
-
-.portfolio-chat-cta h2 {
-  margin: 0;
-  font-size: clamp(1.35rem, 2.5vw, 2rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
 }
 
 .portfolio-entry a,
@@ -655,6 +637,118 @@ body::before {
 .chat-source-list {
   margin: 8px 0 0;
   font-size: 0.88rem;
+}
+
+.chat-widget {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 30;
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+  width: min(420px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.chat-toggle,
+.chat-close {
+  pointer-events: auto;
+  cursor: pointer;
+  font: inherit;
+}
+
+.chat-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  box-shadow: var(--shadow);
+  font-weight: 700;
+  transition: transform 180ms ease;
+}
+
+.chat-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.chat-float-panel {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  max-height: min(720px, calc(100vh - 96px));
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.chat-float-panel[hidden] {
+  display: none;
+}
+
+.chat-float-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.chat-float-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.chat-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.chat-float-panel .chat-suggestions {
+  margin-top: 0;
+}
+
+.chat-float-panel .suggestion-chip {
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.chat-float-panel .chat-log {
+  min-height: 220px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.chat-float-panel .chat-form textarea {
+  min-height: 82px;
+  border-radius: 18px;
+  resize: none;
+}
+
+.chat-float-panel .chat-form-row {
+  justify-content: flex-end;
 }
 
 .sr-only {
@@ -856,18 +950,12 @@ body::before {
   .about-layout,
   .chat-shell,
   .contact-card,
-  .portfolio-chat-cta,
   .portfolio-year {
     grid-template-columns: 1fr;
   }
 
   .portfolio-year-heading {
     position: static;
-  }
-
-  .portfolio-chat-cta {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .portfolio-track {
@@ -936,6 +1024,20 @@ body::before {
     align-items: stretch;
   }
 
+  .chat-widget {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
+  }
+
+  .chat-float-panel {
+    max-height: calc(100vh - 84px);
+  }
+
+  .chat-float-panel .chat-log {
+    max-height: 260px;
+  }
+
   .hero-copy h1 {
     font-size: clamp(2.9rem, 17vw, 4.5rem);
   }
@@ -946,7 +1048,6 @@ body::before {
   .contact-card,
   .portfolio-entry,
   .portfolio-disclaimer,
-  .portfolio-chat-cta,
   .legal-card {
     border-radius: var(--radius-md);
   }

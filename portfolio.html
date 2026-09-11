@@ -26,7 +26,7 @@
           <a href="index.html#work">Work</a>
           <a href="portfolio.html" aria-current="page">Portfolio</a>
           <a href="index.html#about">About</a>
-          <a href="index.html#chat">Chat</a>
+          <a href="#chat-widget" data-chat-open>Chat</a>
           <a href="index.html#contact">Contact</a>
         </nav>
       </header>
@@ -48,26 +48,6 @@
         </section>
 
         <section class="portfolio-timeline" aria-label="Portfolio entries">
-          <article class="portfolio-year">
-            <div class="portfolio-entry-list">
-              <article class="portfolio-entry">
-                <div class="portfolio-company-row">
-                  <img
-                    class="portfolio-company-logo"
-                    src="assets/oracle-logo.svg"
-                    alt="Oracle logo"
-                  />
-                  <p class="portfolio-company">Oracle</p>
-                </div>
-                <h3>Project Name</h3>
-                <p>
-                  Brief project description goes here. Add the product context,
-                  users or stakeholders, and the impact of the work.
-                </p>
-              </article>
-            </div>
-          </article>
-
           <article class="portfolio-year">
             <div class="portfolio-entry-list">
               <article class="portfolio-entry">
@@ -148,27 +128,6 @@
                 <div class="portfolio-company-row">
                   <img
                     class="portfolio-company-logo"
-                    src="assets/panasonic-logo.svg"
-                    alt="Panasonic logo"
-                  />
-                  <p class="portfolio-company">Panasonic</p>
-                </div>
-                <h3>Project Name</h3>
-                <p>
-                  Brief project description goes here. This can stay high level
-                  for now and become more specific once the portfolio entries
-                  are drafted.
-                </p>
-              </article>
-            </div>
-          </article>
-
-          <article class="portfolio-year">
-            <div class="portfolio-entry-list">
-              <article class="portfolio-entry">
-                <div class="portfolio-company-row">
-                  <img
-                    class="portfolio-company-logo"
                     src="assets/charles-schwab-logo.svg"
                     alt="Charles Schwab logo"
                   />
@@ -204,14 +163,63 @@
           </p>
         </section>
 
-        <section class="portfolio-chat-cta" aria-label="Ask about portfolio work">
-          <div>
-            <p class="eyebrow">AI Chat</p>
-            <h2>Ask about the work behind these projects.</h2>
-          </div>
-          <a class="button button-primary" href="index.html#chat">Ask the assistant</a>
-        </section>
       </main>
+
+      <aside class="chat-widget" id="chat-widget" aria-label="AI chat assistant">
+        <button class="chat-toggle" type="button" id="chat-toggle" aria-expanded="false" aria-controls="chat-panel">
+          AI Chat
+        </button>
+
+        <div class="chat-float-panel" id="chat-panel" hidden>
+          <div class="chat-float-header">
+            <div>
+              <p class="eyebrow">AI Chat</p>
+              <h2>Ask about Ryan’s work.</h2>
+            </div>
+            <button class="chat-close" type="button" id="chat-close" aria-label="Close chat">×</button>
+          </div>
+
+          <p class="chat-note">
+            Grounded in Ryan’s site, portfolio, LinkedIn, and resume details.
+          </p>
+
+          <div class="chat-suggestions" aria-label="Suggested questions">
+            <button class="suggestion-chip" type="button" data-prompt="What portfolio projects are listed for Ryan?">
+              Portfolio projects
+            </button>
+            <button class="suggestion-chip" type="button" data-prompt="What is Ryan's experience with healthcare integrations?">
+              Healthcare integrations
+            </button>
+            <button class="suggestion-chip" type="button" data-prompt="What did Ryan work on at Charles Schwab?">
+              Charles Schwab
+            </button>
+          </div>
+
+          <div class="chat-log" id="chat-log" aria-live="polite">
+            <article class="chat-message chat-message-assistant">
+              <p>
+                Ask me about Ryan’s product leadership, portfolio projects,
+                technical background, certifications, or current focus.
+              </p>
+            </article>
+          </div>
+
+          <form class="chat-form" id="chat-form">
+            <label class="sr-only" for="chat-input">Ask a question</label>
+            <textarea
+              id="chat-input"
+              name="message"
+              rows="3"
+              maxlength="600"
+              placeholder="Ask about Ryan’s experience..."
+              required
+            ></textarea>
+            <div class="chat-form-row">
+              <button class="button button-primary" type="submit" id="chat-submit">Ask</button>
+            </div>
+          </form>
+        </div>
+      </aside>
     </div>
 
     <script src="script.js"></script>

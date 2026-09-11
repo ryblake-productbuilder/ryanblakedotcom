@@ -2,6 +2,7 @@ import { KNOWLEDGE_BASE } from "../data/knowledge-base.js";
 
 const OPENAI_API_URL = "https://api.openai.com/v1/responses";
 const MODEL = "gpt-4.1-mini";
+const SITE_TIME_ZONE = "America/Detroit";
 
 function normalize(text) {
   return text
@@ -39,6 +40,27 @@ function retrieveContext(question) {
     .sort((a, b) => b.score - a.score)
     .slice(0, 4)
     .filter((chunk) => chunk.score > 0);
+}
+
+function getCurrentDateContext() {
+  const now = new Date();
+
+  return {
+    title: "Current date",
+    content: `Today's date is ${new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: SITE_TIME_ZONE,
+    }).format(now)} in the ${SITE_TIME_ZONE} time zone.`,
+  };
+}
+
+function asksAboutCurrentDateOrTime(question) {
+  return /\b(today|current date|what date|date today|current time|what time|time now|right now)\b/i.test(
+    question
+  );
 }
 
 function extractResponseText(result) {
@@ -89,10 +111,15 @@ export default {
       return Response.json({ error: "Message is required." }, { status: 400 });
     }
 
+    const dateContext = getCurrentDateContext();
+    const includeDateContext = asksAboutCurrentDateOrTime(message);
     const contextChunks = retrieveContext(message);
+    const suppliedContextChunks = includeDateContext
+      ? [dateContext, ...contextChunks]
+      : contextChunks;
     const contextText =
-      contextChunks.length > 0
-        ? contextChunks
+      suppliedContextChunks.length > 0
+        ? suppliedContextChunks
             .map(
               (chunk) =>
                 `[${chunk.title}]\n${chunk.content}`
@@ -101,7 +128,7 @@ export default {
         : "No highly relevant context was retrieved from the site knowledge base.";
 
     const instructions =
-      "You are an assistant for Ryan Blake's personal website. Answer only from the supplied context when possible. Be concise, helpful, and specific. If the answer is not supported by the context, say that you do not have enough information and suggest contacting Ryan directly at hello@ryanblake.com. Do not invent clients, projects, timelines, or credentials.";
+      "You are an assistant for Ryan Blake's personal website. Answer only from the supplied context when possible. Be concise, helpful, and specific. Use the supplied current date context for questions about today, current time, or relative dates. If the answer is not supported by the context, say that you do not have enough information and suggest contacting Ryan directly at hello@ryanblake.com. Do not invent dates, clients, projects, timelines, or credentials.";
 
     const upstream = await fetch(OPENAI_API_URL, {
       method: "POST",
@@ -156,7 +183,7 @@ export default {
 
     return Response.json({
       answer,
-      sources: contextChunks.map((chunk) => chunk.title),
+      sources: suppliedContextChunks.map((chunk) => chunk.title),
     });
   },
 };
