@@ -41,6 +41,9 @@ const chatPanel = document.querySelector("#chat-panel");
 const chatClose = document.querySelector("#chat-close");
 const chatOpenLinks = document.querySelectorAll("[data-chat-open]");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
+const snapshotCards = document.querySelectorAll(".portfolio-card");
+const snapshotControls = document.querySelectorAll("[data-snapshot-action]");
+let selectedSnapshotIndex = 0;
 function setChatOpen(isOpen) {
   if (!chatPanel || !chatToggle) {
     return;
@@ -191,5 +194,43 @@ suggestionButtons.forEach((button) => {
     }
 
     await submitChat(prompt);
+  });
+});
+
+function selectSnapshotCard(index) {
+  if (snapshotCards.length === 0) {
+    return;
+  }
+
+  selectedSnapshotIndex =
+    (index + snapshotCards.length) % snapshotCards.length;
+
+  snapshotCards.forEach((card, cardIndex) => {
+    card.classList.toggle("is-selected", cardIndex === selectedSnapshotIndex);
+  });
+
+  try {
+    snapshotCards[selectedSnapshotIndex].focus({ preventScroll: true });
+  } catch {
+    snapshotCards[selectedSnapshotIndex].focus();
+  }
+
+  try {
+    snapshotCards[selectedSnapshotIndex].scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  } catch {
+    snapshotCards[selectedSnapshotIndex].scrollIntoView(false);
+  }
+}
+
+snapshotControls.forEach((button) => {
+  button.addEventListener("click", () => {
+    const direction =
+      button.getAttribute("data-snapshot-action") === "prev" ? -1 : 1;
+
+    selectSnapshotCard(selectedSnapshotIndex + direction);
   });
 });
