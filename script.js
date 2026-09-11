@@ -43,6 +43,77 @@ const chatOpenLinks = document.querySelectorAll("[data-chat-open]");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
 const portfolioTrack = document.querySelector("#portfolio-track");
 const snapshotControls = document.querySelectorAll("[data-snapshot-action]");
+const chatSuggestionPool = [
+  {
+    label: "Portfolio projects",
+    prompt: "What portfolio projects are listed for Ryan?",
+  },
+  {
+    label: "Healthcare integrations",
+    prompt: "What is Ryan's experience with healthcare integrations?",
+  },
+  {
+    label: "Charles Schwab",
+    prompt: "What did Ryan work on at Charles Schwab?",
+  },
+  {
+    label: "Oracle Guided Learning",
+    prompt: "What did Ryan work on for Oracle Guided Learning?",
+  },
+  {
+    label: "AI product work",
+    prompt: "What is Ryan's experience with AI product work?",
+  },
+  {
+    label: "Product leadership",
+    prompt: "How has Ryan led product teams?",
+  },
+  {
+    label: "Patents",
+    prompt: "What patents does Ryan have?",
+  },
+  {
+    label: "Dish and Sling TV",
+    prompt: "What did Ryan work on at Dish and Sling TV?",
+  },
+  {
+    label: "Certifications",
+    prompt: "What product and agile certifications does Ryan have?",
+  },
+  {
+    label: "Education",
+    prompt: "What is Ryan's educational background?",
+  },
+];
+
+function getRandomChatSuggestions(count) {
+  const suggestions = chatSuggestionPool.slice();
+
+  for (let index = suggestions.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    const currentSuggestion = suggestions[index];
+
+    suggestions[index] = suggestions[swapIndex];
+    suggestions[swapIndex] = currentSuggestion;
+  }
+
+  return suggestions.slice(0, count);
+}
+
+function refreshChatSuggestions() {
+  const suggestions = getRandomChatSuggestions(suggestionButtons.length);
+
+  Array.prototype.forEach.call(suggestionButtons, (button, index) => {
+    const suggestion = suggestions[index];
+
+    if (!suggestion) {
+      return;
+    }
+
+    button.textContent = suggestion.label;
+    button.setAttribute("data-prompt", suggestion.prompt);
+  });
+}
 
 function getSnapshotScrollDistance() {
   if (!portfolioTrack) {
@@ -85,10 +156,16 @@ function setChatOpen(isOpen) {
   chatPanel.hidden = !isOpen;
   chatToggle.setAttribute("aria-expanded", String(isOpen));
 
+  if (isOpen) {
+    refreshChatSuggestions();
+  }
+
   if (isOpen && chatInput) {
     window.setTimeout(() => chatInput.focus(), 80);
   }
 }
+
+refreshChatSuggestions();
 
 if (chatToggle) {
   chatToggle.addEventListener("click", () => {
