@@ -365,6 +365,17 @@ body::before {
   gap: 18px;
 }
 
+.highlights-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.highlights-grid .project-card {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+}
+
 .project-card,
 .about-panel,
 .portfolio-entry,
@@ -770,30 +781,17 @@ body::before {
   letter-spacing: -0.03em;
 }
 
-.portfolio-carousel {
-  overflow: hidden;
-}
-
 .portfolio-track {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  overflow-x: auto;
-  padding: 4px 4px 16px;
-  scroll-behavior: smooth;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-}
-
-.portfolio-track::-webkit-scrollbar {
-  display: none;
+  align-items: stretch;
 }
 
 .portfolio-card {
   display: flex;
   flex-direction: column;
-  flex: 0 0 min(360px, 82vw);
   min-height: 330px;
-  scroll-snap-align: start;
 }
 
 .project-link {
@@ -839,7 +837,7 @@ body::before {
 
 
 .banana-card {
-  flex-basis: min(720px, 92vw);
+  grid-column: span 2;
   overflow: hidden;
 }
 
@@ -861,36 +859,6 @@ body::before {
   border: 1px solid rgba(12, 68, 124, 0.12);
   border-radius: 20px;
   box-shadow: 0 12px 34px rgba(24, 95, 165, 0.12);
-}
-
-.carousel-controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding-top: 10px;
-}
-
-.carousel-control {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.82);
-  color: var(--text);
-  cursor: pointer;
-  font: inherit;
-  font-size: 1.2rem;
-  font-weight: 700;
-  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease;
-}
-
-.carousel-control:hover {
-  transform: translateY(-1px);
-  border-color: rgba(24, 95, 165, 0.3);
-  color: var(--accent-deep);
 }
 
 .featured {
@@ -959,12 +927,12 @@ body::before {
   }
 
   .portfolio-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
 
-  .portfolio-card,
   .banana-card {
-    flex-basis: 84vw;
+    grid-column: span 2;
   }
 
   .app-thumbnail-row {
@@ -1012,6 +980,14 @@ body::before {
 
   .hero {
     padding-top: 28px;
+  }
+
+  .portfolio-track {
+    grid-template-columns: 1fr;
+  }
+
+  .banana-card {
+    grid-column: auto;
   }
 
   .chat-intro,

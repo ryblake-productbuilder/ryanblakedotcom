@@ -6,25 +6,31 @@ revealTargets.forEach((element) => {
   element.classList.add("reveal");
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    threshold: 0.18,
-    rootMargin: "0px 0px -40px 0px",
-  }
-);
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.18,
+      rootMargin: "0px 0px -40px 0px",
+    }
+  );
 
-revealTargets.forEach((element, index) => {
-  element.style.transitionDelay = `${index * 60}ms`;
-  observer.observe(element);
-});
+  revealTargets.forEach((element, index) => {
+    element.style.transitionDelay = `${index * 60}ms`;
+    observer.observe(element);
+  });
+} else {
+  revealTargets.forEach((element) => {
+    element.classList.add("is-visible");
+  });
+}
 
 const chatForm = document.querySelector("#chat-form");
 const chatInput = document.querySelector("#chat-input");
@@ -35,10 +41,6 @@ const chatPanel = document.querySelector("#chat-panel");
 const chatClose = document.querySelector("#chat-close");
 const chatOpenLinks = document.querySelectorAll("[data-chat-open]");
 const suggestionButtons = document.querySelectorAll(".suggestion-chip");
-const portfolioTrack = document.querySelector("#portfolio-track");
-const carouselControls = document.querySelectorAll("[data-carousel-action]");
-let carouselTimer;
-
 function setChatOpen(isOpen) {
   if (!chatPanel || !chatToggle) {
     return;
@@ -52,14 +54,21 @@ function setChatOpen(isOpen) {
   }
 }
 
-chatToggle?.addEventListener("click", () => {
-  setChatOpen(chatPanel?.hidden);
-});
+if (chatToggle) {
+  chatToggle.addEventListener("click", () => {
+    setChatOpen(chatPanel ? chatPanel.hidden : true);
+  });
+}
 
-chatClose?.addEventListener("click", () => {
-  setChatOpen(false);
-  chatToggle?.focus();
-});
+if (chatClose) {
+  chatClose.addEventListener("click", () => {
+    setChatOpen(false);
+
+    if (chatToggle) {
+      chatToggle.focus();
+    }
+  });
+}
 
 chatOpenLinks.forEach((link) => {
   link.addEventListener("click", () => {
@@ -70,7 +79,10 @@ chatOpenLinks.forEach((link) => {
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && chatPanel && !chatPanel.hidden) {
     setChatOpen(false);
-    chatToggle?.focus();
+
+    if (chatToggle) {
+      chatToggle.focus();
+    }
   }
 });
 
@@ -118,7 +130,18 @@ async function submitChat(message) {
       body: JSON.stringify({ message }),
     });
 
-    const payload = await response.json();
+    const responseText = await response.text();
+    let payload = {};
+
+    try {
+      payload = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      payload = {
+        error: response.ok
+          ? "The chat response could not be read."
+          : "The chat service returned an unreadable response.",
+      };
+    }
 
     if (!response.ok) {
       throw new Error(payload.error || "Something went wrong.");
@@ -170,70 +193,3 @@ suggestionButtons.forEach((button) => {
     await submitChat(prompt);
   });
 });
-
-function getCarouselStep() {
-  if (!portfolioTrack) {
-    return 0;
-  }
-
-  const firstCard = portfolioTrack.querySelector(".portfolio-card");
-  const trackStyles = window.getComputedStyle(portfolioTrack);
-  const gap = Number.parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
-
-  return firstCard ? firstCard.getBoundingClientRect().width + gap : 0;
-}
-
-function moveCarousel(direction) {
-  if (!portfolioTrack) {
-    return;
-  }
-
-  const step = getCarouselStep();
-  const maxScroll = portfolioTrack.scrollWidth - portfolioTrack.clientWidth;
-  const nextPosition = portfolioTrack.scrollLeft + step * direction;
-
-  if (nextPosition > maxScroll - 2) {
-    portfolioTrack.scrollTo({ left: 0, behavior: "auto" });
-    window.requestAnimationFrame(() => {
-      portfolioTrack.scrollBy({ left: step, behavior: "smooth" });
-    });
-    return;
-  }
-
-  if (nextPosition < 0) {
-    portfolioTrack.scrollTo({ left: maxScroll, behavior: "auto" });
-    window.requestAnimationFrame(() => {
-      portfolioTrack.scrollBy({ left: -step, behavior: "smooth" });
-    });
-    return;
-  }
-
-  portfolioTrack.scrollBy({ left: step * direction, behavior: "smooth" });
-}
-
-carouselControls.forEach((button) => {
-  button.addEventListener("click", () => {
-    const action = button.getAttribute("data-carousel-action");
-
-    if (action === "prev") {
-      moveCarousel(-1);
-    }
-
-    if (action === "next") {
-      moveCarousel(1);
-    }
-  });
-});
-
-function startCarousel() {
-  if (!portfolioTrack || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    return;
-  }
-
-  window.clearInterval(carouselTimer);
-  carouselTimer = window.setInterval(() => {
-    moveCarousel(1);
-  }, 5000);
-}
-
-startCarousel();
