@@ -42,6 +42,10 @@ function retrieveContext(question) {
     .filter((chunk) => chunk.score > 0);
 }
 
+function getKnowledgeChunk(id) {
+  return KNOWLEDGE_BASE.find((chunk) => chunk.id === id);
+}
+
 function getCurrentDateContext() {
   const now = new Date();
 
@@ -59,6 +63,12 @@ function getCurrentDateContext() {
 
 function asksAboutCurrentDateOrTime(question) {
   return /\b(today|current date|what date|date today|current time|what time|time now|right now)\b/i.test(
+    question
+  );
+}
+
+function asksAboutEducation(question) {
+  return /\b(college|university|school|education|educational|degree|degrees|mba|undergrad|undergraduate|bachelor|cal poly|california polytechnic|denver|daniels)\b/i.test(
     question
   );
 }
@@ -114,9 +124,17 @@ export default {
     const dateContext = getCurrentDateContext();
     const includeDateContext = asksAboutCurrentDateOrTime(message);
     const contextChunks = retrieveContext(message);
-    const suppliedContextChunks = includeDateContext
-      ? [dateContext, ...contextChunks]
-      : contextChunks;
+    const educationContext = asksAboutEducation(message)
+      ? getKnowledgeChunk("education")
+      : null;
+    const suppliedContextChunks = [
+      ...(includeDateContext ? [dateContext] : []),
+      ...(educationContext ? [educationContext] : []),
+      ...contextChunks,
+    ].filter(
+      (chunk, index, chunks) =>
+        chunk && chunks.findIndex((candidate) => candidate.title === chunk.title) === index
+    );
     const contextText =
       suppliedContextChunks.length > 0
         ? suppliedContextChunks
