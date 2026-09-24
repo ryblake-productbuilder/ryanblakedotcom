@@ -270,17 +270,29 @@ async function submitChat(message) {
 }
 
 if (chatForm && chatInput) {
-  chatForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
+  async function submitCurrentChatInput() {
     const message = chatInput.value.trim();
 
-    if (!message) {
+    if (!message || (chatSubmit && chatSubmit.disabled)) {
       return;
     }
 
     chatInput.value = "";
     await submitChat(message);
+  }
+
+  chatInput.addEventListener("keydown", async (event) => {
+    if (event.key !== "Enter" || event.shiftKey || event.isComposing) {
+      return;
+    }
+
+    event.preventDefault();
+    await submitCurrentChatInput();
+  });
+
+  chatForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await submitCurrentChatInput();
   });
 }
 
